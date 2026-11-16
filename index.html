@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TakuCale | 卓に特化したカレンダー＆付箋ウィジェット</title>
+<meta name="description" content="TakuCaleは、TRPGの卓の準備と当日に使う、Windows向けのデスクトップ付箋ウィジェットです。">
+<link rel="icon" href="favicon.png">
+<style>
+:root{--navy:#22264B;--cream:#FFF3D1;--pink:#FFB9CB;--coral:#FF7A8F;--mint:#B5EBCF;--sky:#BDDCFF;--lemon:#FFE066;--sub:#5b5f82;
+--font:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Yu Gothic UI","Yu Gothic",Meiryo,system-ui,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--navy);font-family:var(--font);line-height:1.8;-webkit-text-size-adjust:100%}
+a{color:var(--navy)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.badge{display:inline-block;padding:6px 18px;border-radius:999px;background:var(--navy);color:var(--cream);font-weight:700;font-size:13px;letter-spacing:.12em}
+h1{font-size:clamp(52px,11vw,112px);line-height:1;margin:16px 0 8px;letter-spacing:-.04em;font-weight:900}
+h2{font-size:clamp(24px,4vw,32px);margin:0 0 6px;font-weight:900;line-height:1.35}
+.lead{font-size:clamp(18px,2.6vw,24px);font-weight:700;margin:0 0 12px}
+header.hero{position:relative;overflow:hidden;padding:44px 0 36px}
+header.hero:before{content:"";position:absolute;right:-160px;top:-200px;width:520px;height:520px;border-radius:50%;background:#FFE08A;z-index:0}
+header.hero:after{content:"";position:absolute;left:-180px;bottom:-240px;width:440px;height:440px;border-radius:50%;background:#FFE6B0;z-index:0}
+.hero .wrap{position:relative;z-index:1}
+.board{position:relative;height:330px;margin:28px 0 0}
+.note{position:absolute;border-radius:20px;box-shadow:0 12px 0 rgba(34,38,75,.10);padding:20px 22px}
+.clock{left:0;top:40px;width:250px;background:var(--pink);transform:rotate(-4deg)}
+.clock .t{font-size:62px;font-weight:300;line-height:1;letter-spacing:-.02em}
+.clock .s{font-size:13px;font-weight:700;letter-spacing:.2em;margin-top:6px}
+.cal{left:230px;top:0;width:290px;background:#fff;transform:rotate(2deg)}
+.cal .h{display:flex;justify-content:space-between;align-items:baseline;font-weight:900;font-size:22px;margin-bottom:8px}
+.cal .h span{font-size:14px;color:#8A8DB0;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;font-weight:700;font-size:13px}
+.grid b{position:relative;height:30px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.grid .today{background:var(--coral);color:#fff;border-radius:50%;width:28px;margin:0 auto}
+.grid i{position:absolute;bottom:0;width:5px;height:5px;border-radius:50%;background:#3FB8A0}
+.todo{left:520px;top:30px;width:210px;background:var(--mint);transform:rotate(4deg)}
+.todo h3{margin:0 0 10px;font-size:18px;letter-spacing:.12em}
+.todo div{display:flex;align-items:center;gap:9px;font-weight:700;font-size:15px;margin:7px 0}
+.todo div:before{content:"";flex:0 0 auto;width:16px;height:16px;border-radius:50%;border:2.5px solid var(--navy)}
+.todo .done{opacity:.5;text-decoration:line-through}.todo .done:before{background:var(--navy)}
+.lnch{left:60px;top:230px;width:270px;background:var(--sky);transform:rotate(3deg);display:flex;gap:14px;justify-content:space-between;padding:20px 24px}
+.lnch i{width:44px;height:44px;border-radius:13px;display:block}
+.memo{left:560px;top:205px;width:210px;background:var(--lemon);transform:rotate(-3deg);padding:18px 20px}
+.memo i{display:block;height:8px;border-radius:4px;background:rgba(34,38,75,.35);margin:11px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chips span{padding:4px 14px;border-radius:999px;background:var(--navy);color:var(--cream);font-weight:700;font-size:14px}
+section{padding:36px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:18px}
+.card{background:#fff;border-radius:20px;padding:18px 22px;box-shadow:0 8px 0 rgba(34,38,75,.10)}
+.card h3{margin:0 0 4px;font-size:19px;font-weight:900}
+.card p{margin:0;font-size:15px;color:var(--sub);font-weight:500}
+.panel{background:#fff;border-radius:24px;padding:26px 28px;box-shadow:0 10px 0 rgba(34,38,75,.10)}
+.panel.sky{background:var(--sky)}
+.panel ul{margin:8px 0 0;padding-left:1.2em}
+.panel li{margin:4px 0}
+.small{font-size:14px;color:var(--sub)}
+footer{padding:30px 0 50px;font-size:14px}
+footer a{margin-right:18px;font-weight:700}
+.en h2{margin-top:0}
+.en p,.en li{font-size:15px}
+@media (max-width:760px){
+ .board{height:auto;display:flex;flex-direction:column;gap:22px;align-items:center}
+ .note{position:relative;left:auto!important;top:auto!important;width:min(92%,340px)}
+}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <span class="badge">DESKTOP WIDGET for Windows</span>
+  <h1>TakuCale</h1>
+  <p class="lead">卓に特化したカレンダー＆付箋ウィジェット</p>
+  <p>TRPGのセッション日・準備のTODO・資料のリンクを、デスクトップに置いた付箋にまとめて。時計・カレンダー・TODO・メモ・ランチャーを、必要なものだけ好きな数だけ置けます。</p>
+  <div class="board" aria-hidden="true">
+    <div class="note clock"><div class="t">21:30</div><div class="s">MON 16 NOV</div></div>
+    <div class="note cal"><div class="h">NOVEMBER<span>2026</span></div><div class="grid"><b class="d">1</b><b class="d">2</b><b class="d">3</b><b class="d">4</b><b class="d">5</b><b class="d">6</b><b class="d">7<i></i></b><b class="d">8</b><b class="d">9</b><b class="d">10</b><b class="d">11</b><b class="d">12</b><b class="d">13</b><b class="d">14</b><b class="d">15</b><b class="d today">16</b><b class="d">17</b><b class="d">18</b><b class="d">19</b><b class="d">20</b><b class="d">21<i></i></b><b class="d">22</b><b class="d">23</b><b class="d">24</b><b class="d">25</b><b class="d">26</b><b class="d">27</b><b class="d">28<i></i></b><b class="d">29</b><b class="d">30</b><b></b><b></b><b></b><b></b><b></b></div></div>
+    <div class="note todo"><h3>TODO</h3><div class="done">シナリオを読み込む</div><div>立ち絵を用意</div><div>BGMを選ぶ</div></div>
+    <div class="note lnch"><i style="background:#FF7A8F"></i><i style="background:#FFD23F"></i><i style="background:#3FB8A0"></i><i style="background:#22264B"></i></div>
+    <div class="note memo"><i style="background:#22264B;width:70%"></i><i style="width:92%"></i><i style="width:55%"></i></div>
+  </div>
+  <div class="chips"><span>時計</span><span>カレンダー</span><span>TODO</span><span>メモ</span><span>ランチャー</span></div>
+</div></header>
+
+<main>
+<section><div class="wrap">
+  <h2>できること</h2>
+  <div class="cards">
+    <div class="card"><h3>スタンプで色分け</h3><p>セッション日・準備日を、ダイスや星のスタンプで一目で見分けられます。</p></div>
+    <div class="card"><h3>期限がカレンダーに</h3><p>TODOの期限日が、自動でカレンダーの日付に表示されます。</p></div>
+    <div class="card"><h3>空き日を抽出</h3><p>予定のない日を一覧にして、日程調整に使えます。</p></div>
+    <div class="card"><h3>ランチャー</h3><p>URLやアプリを登録して、Ctrl+クリックでまとめて起動。グループやプリセットも作れます。</p></div>
+    <div class="card"><h3>URLをワンクリック</h3><p>予定やTODOに書いたリンクを、そのまま開けます。</p></div>
+    <div class="card"><h3>画像でコピー</h3><p>付箋の画面を画像としてコピーして、チャットや資料にそのまま貼り付けられます。</p></div>
+    <div class="card"><h3>見た目を整える</h3><p>テーマ色・ナイトモード・フォント・透明度を付箋ごとに調整できます。</p></div>
+    <div class="card"><h3>バックアップ</h3><p>データはこのPCに保存され、自動でバックアップされます。</p></div>
+  </div>
+</div></section>
+
+<section id="google"><div class="wrap">
+  <div class="panel sky">
+    <h2>Googleカレンダー連携（任意）</h2>
+    <p>「Googleに接続」を押すと、選んだ1つのGoogleカレンダーとTakuCaleの予定が、双方向で同じになります。連携は使う人が自分で選ぶ機能で、使わなくてもすべての機能が動きます。</p>
+    <ul>
+      <li><b>アクセスするもの</b>：選んだカレンダーの予定（タイトル・説明・日時）と、カレンダーの一覧（名前と権限）だけです</li>
+      <li><b>使いみち</b>：予定をTakuCaleに表示し、TakuCaleでの追加・変更・削除をGoogleカレンダーに反映するためだけに使います</li>
+      <li><b>保存</b>：予定のデータもログイン情報も、あなたのPCの中にだけ保存します（ログイン情報はOSの機能で暗号化）。開発者のサーバーはなく、データを外部へ送ることはありません</li>
+      <li><b>やめたいとき</b>：アプリの「接続を解除」で取り消せます。Googleアカウントの<a href="https://myaccount.google.com/permissions" rel="noopener">アクセス権</a>の画面からも取り消せます</li>
+    </ul>
+    <p class="small">詳しくは<a href="privacy.html">プライバシーポリシー</a>をご覧ください。TakuCaleによるGoogle APIから受け取った情報の利用と他のアプリへの転送は、Limited Useの要件を含む<a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>に従います。</p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="panel">
+    <h2>入手方法</h2>
+    <p>BOOTHで公開予定です（無料版と、100円の支援版があります。中身は同じです）。公開の準備ができたら、このページでお知らせします。</p>
+    <p class="small">Windows向け。Googleカレンダーの予定は、読み取り専用のICS購読でも表示できます（連携なしでも使えます）。</p>
+  </div>
+</div></section>
+
+<section class="en"><div class="wrap">
+  <div class="panel">
+    <h2>About TakuCale</h2>
+    <p>TakuCale is a free desktop sticky-note widget for Windows, made for tabletop RPG game masters and players. It puts a clock, a calendar with session stamps, a TODO list, memos, and an app/URL launcher on your desktop as small, semi-transparent notes.</p>
+    <p><b>Optional Google Calendar sync.</b> If you choose "Connect to Google", TakuCale two-way syncs <i>one</i> Google Calendar that you select (events from 30 days back to 180 days ahead). It accesses only that calendar's events (title, description, date/time) and your calendar list (name and access role). Data and sign-in credentials stay on your own PC (credentials are encrypted by the operating system); there is no developer server, and nothing is shared with third parties. You can disconnect in the app or at <a href="https://myaccount.google.com/permissions" rel="noopener">your Google Account permissions page</a>.</p>
+    <p class="small">TakuCale's use and transfer of information received from Google APIs to any other app will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>, including the Limited Use requirements. See our <a href="privacy.html#en">Privacy Policy</a>.</p>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <a href="privacy.html">プライバシーポリシー / Privacy Policy</a>
+  <a href="mailto:ejika.gyu@gmail.com">お問い合わせ / Contact</a>
+  <p class="small">© notenog</p>
+</div></footer>
+</body>
+</html>
