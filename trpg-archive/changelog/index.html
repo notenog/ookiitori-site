@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TRPG Archive 更新履歴</title>
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="TRPGシナリオを解凍せずに整理する本棚アプリ「TRPG Archive」の更新履歴です。">
+<style>
+  :root {
+    --bg: #242424; --panel: #2c2c2c; --panel-2: #313131; --line: #414141; --line-soft: #363636;
+    --text: #e4e4e4; --muted: #a3a3a3; --faint: #777; --accent: #b7a58b; --accent-hi: #cdbda3;
+    --new: #8fb39a; --fix: #c9926a;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f6f3ee; --panel: #fffdf9; --panel-2: #f1ece4; --line: #ddd5c8; --line-soft: #e8e1d6;
+      --text: #2e2b27; --muted: #6d665c; --faint: #9a9185; --accent: #8a7556; --accent-hi: #6f5c40;
+      --new: #4f7c5c; --fix: #a5643a;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Meiryo", sans-serif; font-weight: 500; line-height: 1.8; font-size: 15px; -webkit-text-size-adjust: 100%; }
+  a { color: var(--accent-hi); }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+
+  header.top { border-bottom: 1px solid var(--line-soft); padding: 44px 0 30px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 14px; letter-spacing: .04em; }
+  .brand svg { width: 26px; height: 26px; color: var(--accent); flex: none; }
+  h1 { font-family: "BIZ UDPMincho", serif; font-weight: 700; font-size: clamp(28px, 6vw, 38px); margin: 10px 0 8px; letter-spacing: .02em; }
+  .lead { color: var(--muted); margin: 0; }
+  .vnav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .vnav a { text-decoration: none; color: var(--text); border: 1px solid var(--line); border-radius: 999px; padding: 3px 14px; font-size: 13.5px; background: var(--panel); }
+  .vnav a:hover { border-color: var(--accent); }
+
+  .release { padding: 40px 0 8px; scroll-margin-top: 12px; }
+  .release + .release { border-top: 1px solid var(--line-soft); }
+  .rel-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+  .rel-head h2 { font-family: "BIZ UDPMincho", serif; font-size: 30px; margin: 0; letter-spacing: .02em; }
+  .rel-head time { color: var(--muted); font-size: 14px; }
+  .badge { font-size: 12px; font-weight: 700; padding: 1px 10px; border-radius: 999px; background: var(--accent); color: #1e1c19; }
+  .rel-sum { margin: 10px 0 22px; color: var(--muted); }
+
+  .highlights { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-bottom: 26px; }
+  .hl { background: var(--panel); border: 1px solid var(--line-soft); border-radius: 10px; padding: 16px 16px 14px; }
+  .hl h3 { margin: 0 0 6px; font-size: 15.5px; display: flex; gap: 8px; align-items: center; }
+  .hl h3 i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; }
+  .hl p { margin: 0; font-size: 13.5px; color: var(--muted); line-height: 1.75; }
+
+  details.group { border: 1px solid var(--line-soft); border-radius: 10px; background: var(--panel); margin-bottom: 10px; }
+  details.group > summary { cursor: pointer; list-style: none; padding: 12px 16px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+  details.group > summary::-webkit-details-marker { display: none; }
+  details.group > summary::before { content: ""; width: 7px; height: 7px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(-45deg); transition: transform .15s; flex: none; margin-right: 2px; }
+  details.group[open] > summary::before { transform: rotate(45deg); }
+  details.group > summary em { font-style: normal; font-weight: 500; color: var(--faint); font-size: 13px; margin-left: auto; }
+  details.group ul { margin: 0; padding: 0 18px 14px 40px; }
+  details.group li { margin: 4px 0; font-size: 14px; }
+  details.group li ul { padding: 2px 0 0 18px; }
+  .tag { display: inline-block; font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 0 6px; margin-right: 6px; vertical-align: 1px; line-height: 1.6; }
+  .tag.new { color: var(--new); border: 1px solid currentColor; }
+  .tag.fix { color: var(--fix); border: 1px solid currentColor; }
+  kbd { font-family: inherit; font-size: 12px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; background: var(--panel-2); }
+  q { quotes: "「" "」"; }
+
+  .preview-note { margin: 34px 0 0; padding: 18px 20px 16px; border-radius: 10px; background: var(--panel); border: 1px solid var(--line-soft); border-left: 3px solid var(--accent); }
+  .preview-note h2 { font-size: 16px; margin: 0 0 6px; display: flex; align-items: center; gap: 10px; }
+  .preview-note h2 .badge { background: transparent; color: var(--accent-hi); border: 1px solid var(--accent); }
+  .preview-note p { margin: 0; font-size: 14px; color: var(--muted); }
+  .preview-note ul { margin: 8px 0 0; padding-left: 22px; font-size: 14px; }
+  .preview-note li { margin: 3px 0; }
+  .preview-note li b { color: var(--text); }
+
+  .howto { margin: 44px 0 0; padding: 20px 20px 16px; border-radius: 10px; background: var(--panel-2); border: 1px solid var(--line-soft); }
+  .howto h2 { font-size: 17px; margin: 0 0 8px; }
+  .howto ol { margin: 0; padding-left: 22px; font-size: 14px; }
+  .howto p { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+  footer { color: var(--faint); font-size: 13px; padding: 36px 0 48px; text-align: center; }
+  footer a { color: var(--muted); }
+  @media (max-width: 520px) {
+    body { font-size: 14.5px; }
+    header.top { padding-top: 32px; }
+    details.group ul { padding-left: 32px; padding-right: 12px; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 4v16M10 4v16M15 5l4 14"/></svg>
+      TRPG Archive
+    </div>
+    <h1>更新履歴</h1>
+    <p class="lead">TRPGシナリオを解凍せずに整理する本棚アプリ「TRPG Archive」の、バージョンごとの変更点です。</p>
+    <nav class="vnav" aria-label="バージョン">
+      <a href="#v1.2.1">v1.2.1</a>
+      <a href="#v1.2.0">v1.2.0</a>
+      <a href="#v1.1.0">v1.1.0</a>
+      <a href="#v1.0.0">v1.0.0</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!--
+    新しいバージョンを足すときは、下の <section class="release"> をまるごとコピーして、いちばん上に貼ってください。
+    「最新」の印（<span class="badge">最新</span>）は、いちばん上のバージョンだけに付けます。
+    上の .vnav にもリンクを1つ足してください。
+  -->
+
+  <section class="preview-note" aria-labelledby="addon-h">
+    <h2 id="addon-h"><span class="badge">新発売</span>ログ・CS の追加版（有料）を BOOTH で配布しています</h2>
+    <p>TRPG Archive に入れて使う有料の「追加版」です。使いたいものだけ選んで入れられます。</p>
+    <ul>
+      <li><b>ログ</b>：ココフォリア・Tekey・どどんとふのセッションログを取り込んで、読みやすく整えて見られます。顔アイコンの表示、ダイスの成功・失敗の色分けにも対応。GM・PL・同卓者で整理でき、シナリオともつながります</li>
+      <li><b>CS</b>：キャラクター保管所・いあきゃら・Charaeno などのキャラクターシートを、立ち絵つきで一覧にして管理できます。技能での絞り込み・背景と配置・成長の記録やメモにも対応しています</li>
+    </ul>
+    <p>本体 v1.2.1 以上が必要です。設定 →<q>追加版</q>から、ダウンロードしたZIPを選ぶだけで入ります。<a href="https://ookiitori.booth.pm/">BOOTHのページへ</a></p>
+  </section>
+
+  <section class="release" id="v1.2.1">
+    <div class="rel-head">
+      <h2>v1.2.1</h2>
+      <time datetime="2026-11-01">2026年11月1日</time>
+      <span class="badge">最新</span>
+    </div>
+    <p class="rel-summary rel-sum">追加版（ログ・CS）に対応しました。あわせて、詳細パネルの×ボタンや設定画面など、細かなところを直しています。</p>
+
+    <div class="highlights">
+      <div class="hl"><h3><i></i>追加版（ログ・CS）に対応</h3>
+        <p>BOOTHで配布している追加版「ログ」「CS」を入れられるようになりました。設定 →「追加版」から、ダウンロードしたZIPを選んでください。</p></div>
+      <div class="hl"><h3><i></i>詳細パネルの×</h3>
+        <p>詳細パネルを下までスクロールしても、右上の×で閉じられるようになりました。</p></div>
+    </div>
+
+    <details class="group" open>
+      <summary>追加版への対応<em>4件</em></summary>
+      <ul>
+        <li><span class="tag new">新機能</span>追加版を入れると、左上（アプリ名の横）のボタンで、シナリオ・ログ・CSのページを切り替えられます</li>
+        <li>使い方ガイドを、追加版のページでも使えるようにしました（はじめてそのページを開いたときに出ます。<q>…</q>→<q>使い方ガイド</q>は、いま開いているページのものを出します）</li>
+        <li><q>…</q>メニュー：追加版のページでは、シナリオだけの項目を隠して、そのページの項目を出すようにしました</li>
+        <li>アップデートしたときの<q>新しくなったこと</q>に、飛ばしたバージョンの変更点もまとめて出すようにしました</li>
+      </ul>
+    </details>
+
+    <details class="group" open>
+      <summary>細かな修正<em>3件</em></summary>
+      <ul>
+        <li>詳細パネルの×ボタンを、スクロールしても右上に残すようにしました</li>
+        <li>設定画面の高さが、左の項目を切り替えても変わらないようにしました</li>
+        <li><span class="tag fix">修正</span>お知らせが、ほかの画面の後ろに隠れて見えないことがあった</li>
+      </ul>
+    </details>
+  </section>
+
+  <section class="release" id="v1.2.0">
+    <div class="rel-head">
+      <h2>v1.2.0</h2>
+      <time datetime="2026-10-28">2026年10月28日</time>
+    </div>
+    <p class="rel-summary rel-sum">シナリオがたくさんあっても軽く動くように、起動・検索・スクロールを見直しました。テキストファイルの登録や、PCの買い替え・フォルダの移動に備える機能、サムネイルの位置調整やプレビュー内の検索も追加しています。</p>
+
+    <div class="highlights">
+      <div class="hl"><h3><i></i>軽く・速く</h3>
+        <p>シナリオが多くても、起動・検索・スクロールが軽くなりました。一覧の右下の「↑」で、いちばん上に戻れます。</p></div>
+      <div class="hl"><h3><i></i>テキストファイルも登録</h3>
+        <p>単体の .txt もシナリオとして登録でき、アプリの中でそのまま読めます。</p></div>
+      <div class="hl"><h3><i></i>フォルダを付け替える</h3>
+        <p>フォルダを動かした・ドライブの文字が変わったときに、場所が見つからないシナリオをまとめて付け替えられます。</p></div>
+      <div class="hl"><h3><i></i>データの引っ越し</h3>
+        <p>登録データ・サムネイルを1つのファイルに書き出して、新しいPCで読み込めます（シナリオのZIP・フォルダは別にコピーが必要です）。</p></div>
+      <div class="hl"><h3><i></i>表紙を自動でサムネイルに</h3>
+        <p>画像の名前が表紙らしくないときは、本文のPDF・HTMLの表紙を自動でサムネイルにします。</p></div>
+      <div class="hl"><h3><i></i>システムの色を24色に</h3>
+        <p>システムの色の候補を増やしました。「ほかの色…」から好きな色も選べます。</p></div>
+      <div class="hl"><h3><i></i>サムネイルの位置調整</h3>
+        <p>サムネイルのどこを見せるか（位置・拡大）を調整できます。クリックすると画像を大きく表示します。</p></div>
+      <div class="hl"><h3><i></i>プレビューの中を検索</h3>
+        <p>プレビュー中に Ctrl+F で、HTML・PDFの中の言葉を探せます。</p></div>
+    </div>
+
+    <details class="group" open>
+      <summary>軽く・速く<em>4件</em></summary>
+      <ul>
+        <li>カード一覧の読み込みを見直して、起動が速くなりました</li>
+        <li>検索・絞り込み・並び替え・カードの選択・ドラッグを軽くしました（中のファイル名の検索も速くなりました）</li>
+        <li><span class="tag new">新機能</span>一覧を下にスクロールすると、右下に<q>↑</q>が出ます。押すと一覧のいちばん上に戻ります</li>
+        <li>シナリオがたくさん（数千件）あるときに、使うメモリが大きく減りました</li>
+      </ul>
+    </details>
+
+    <details class="group" open>
+      <summary>登録・テキストファイル<em>4件</em></summary>
+      <ul>
+        <li><span class="tag new">新機能</span>単体のテキストファイル（.txt）も、シナリオとして登録できるようになりました</li>
+        <li>テキストファイルのシナリオには<q>〇〇を読む</q>ボタンが付き、アプリの中で読めます</li>
+        <li>監視フォルダの直下に単独で置いたテキストファイルも取り込みます（readme・規約・メモなどは除きます）</li>
+        <li>フォルダをドロップしたときは、フォルダの直下のテキストファイルを別のシナリオにしないようにしました</li>
+      </ul>
+    </details>
+
+    <details class="group">
+      <summary>場所が見つからないとき・データの引っ越し<em>4件</em></summary>
+      <ul>
+        <li><span class="tag new">新機能</span><q>フォルダを付け替える</q>：元のフォルダと新しいフォルダを1回指定すると、その下のシナリオの場所をまとめて書き換えます（監視フォルダも）。<q>状態</q>→<q>場所が見つからない</q>の一覧の上か、設定 →<q>データ</q>から使えます</li>
+        <li><span class="tag new">新機能</span><q>データの引っ越し</q>：設定 →<q>データ</q>から、タグ・メモ・プレイ状況・サムネイルなどの登録データを1つのファイルに書き出して、新しいPCで読み込めます。読み込む前のデータは消さずに残します
+          <ul>
+            <li>シナリオのZIP・フォルダそのものは入りません。新しいPCへは別にコピーしてください（アプリは元のファイルを読んで表示しているので、消すと読めなくなります）</li>
+          </ul></li>
+        <li>サイドバーの<q>状態</q>の見出しの横に、場所が見つからないシナリオの数を出すようにしました（見出しを閉じていても気づけます）</li>
+        <li><q>なに回す？</q>で場所が見つからないシナリオを除いたときは、その数を表示するようにしました。押すと、そのシナリオだけを一覧で見られます</li>
+      </ul>
+    </details>
+
+    <details class="group">
+      <summary>サムネイル・プレビュー・見た目<em>9件</em></summary>
+      <ul>
+        <li><span class="tag new">新機能</span>サムネイルの<q>位置を調整</q>：詳細パネルの画像にマウスを乗せると出ます。カードと詳細パネルそれぞれで、画像のどこを見せるか・どれくらい拡大するかを決められます（画像そのものは切らないので、何度でも直せます）</li>
+        <li><span class="tag new">新機能</span>詳細パネルのサムネイルをクリックすると、画像を大きく表示します（←→で切り替え）</li>
+        <li><span class="tag new">新機能</span>プレビュー中に<q>Ctrl+F</q>で、HTML・PDFの中の言葉を探せます</li>
+        <li>一覧の上の帯（タイトル・件数・<q>選択</q>）は、スクロールしても上に残るようにしました</li>
+        <li><span class="tag new">新機能</span>自動のサムネイル：画像の名前がトレーラー・表紙・シナリオ名らしくないときは、本文のPDFの1ページ目の画像（またはHTMLの最初の画像）を使います。2ページ目以降の画像は、ネタバレ防止のため自動では使いません</li>
+        <li><span class="tag new">新機能</span>システムの色を24色にしました（これまでの12色はそのまま）。<q>ほかの色…</q>から好きな色も選べます</li>
+        <li>検索したとき、シナリオにまとめた素材の中で見つかったものも、一覧の下に出すようにしました</li>
+        <li>素材として登録済みのものを登録し直したときは、<q>〇〇の付属の素材として登録されています</q>と出して、<q>表示する</q><q>ふつうのシナリオに戻す</q>を選べるようにしました</li>
+        <li>タグの入力欄の候補を、スクロールして選べるリストにしました</li>
+      </ul>
+    </details>
+
+    <details class="group">
+      <summary>不具合の修正<em>2件</em></summary>
+      <ul>
+        <li><span class="tag fix">修正</span>タグがたくさんあるとき、入力欄の下のほうの候補が選べなかった</li>
+        <li><span class="tag fix">修正</span>画像だけのフォルダが、同じフォルダにあるシナリオの素材に隠れてしまうことがあった</li>
+      </ul>
+    </details>
+
+    <details class="group">
+      <summary>Mac版（試作）<em>1件</em></summary>
+      <ul>
+        <li>Mac版（試作）も、上の変更はすべてWindows版と同じです</li>
+      </ul>
+    </details>
+  </section>
+
+  <section class="release" id="v1.1.0">
+    <div class="rel-head">
+      <h2>v1.1.0</h2>
+      <time datetime="2026-10-16">2026年10月16日</time>
+    </div>
+    <p class="rel-summary rel-sum">素材ZIPの自動整理や、バラバラに登録されたシナリオをひとつにまとめる機能を中心に、ドラッグでの操作をたくさん増やしました。</p>
+
+    <div class="highlights">
+      <div class="hl"><h3><i></i>素材をシナリオにまとめる</h3>
+        <p>画像・BGM・ココフォリアの部屋データだけのZIPやフォルダは「素材」として、一覧に出さずに元のシナリオにまとめます。カードを重ねて手動でまとめることもできます。</p></div>
+      <div class="hl"><h3><i></i>ひとつのシナリオにまとめる</h3>
+        <p>本文・HO・おまけが別々になったシナリオを、ドロップ時の確認や、カードを重ねる操作でひとつにできます。</p></div>
+      <div class="hl"><h3><i></i>メモ欄</h3>
+        <p>BOOTHのURL・遊んだ日・感想などを自由に書けます。URLはボタンからすぐ開けて、メモの中身も検索できます。</p></div>
+      <div class="hl"><h3><i></i>サムネイルがもっと自由に</h3>
+        <p>PDF・HTMLの中の画像から選んだり、画像をカードに重ねたり。最大5枚をカードで切り替えて表示できます。</p></div>
+      <div class="hl"><h3><i></i>使い方ガイドを作り直し</h3>
+        <p>アプリの画面に番号付きの説明を重ねた、7ページのガイドになりました。</p></div>
+      <div class="hl"><h3><i></i>サイドバーを好きな順に</h3>
+        <p>システム・プレイ状況・タグの項目や、欄そのものの順番を、ドラッグで並べ替えられます。</p></div>
+    </div>
+
+    <details class="group" open>
+      <summary>素材をシナリオにまとめる<em>9件</em></summary>
+      <ul>
+        <li><span class="tag new">新機能</span>名前に「素材」「ココフォリア」「部屋データ」「Material」などが入っていて本文がないもの、中身が画像・音声・部屋データだけのものを「素材」とみなし、元のシナリオにまとめます</li>
+        <li>まとめ先は、名前・元のフォルダ名・ZIPの中のフォルダ名などから探します（「第6版」「CoC」などの版・システム名は外して比べます）。はっきりしないものは、左の<q>状態</q>→<q>素材（まとめ先なし）</q>に入ります</li>
+        <li>シナリオの詳細に<q>付属の素材</q>欄を追加。中身を見る・フォルダで表示・外す・素材にしない、が選べます。素材の画像はサムネイルにもできます</li>
+        <li><q>＋ 素材を追加</q>や素材の詳細から、名前で検索してまとめ先を選べます</li>
+        <li><span class="tag new">新機能</span>うまくまとまらなかった素材は、カードをつかんで元のシナリオのカードに<b>重ねる</b>だけでまとめられます（<q>素材としてまとめる</q>を選びます）</li>
+        <li>一覧の<q>選択</q>→<q>素材にする</q>で、まとめて素材にできます</li>
+        <li>素材やファイルをまとめているシナリオのカードには<q>+1</q>のような印が付きます</li>
+        <li>設定 →<q>取り込み・整理</q>から、素材をまとめない（ふつうのシナリオとして出す）こともできます</li>
+        <li>アップデート後の最初の起動で、登録済みのものを一度だけ見直します</li>
+      </ul>
+    </details>
+
+    <details class="group" open>
+      <summary>登録・ひとつにまとめる<em>6件</em></summary>
+      <ul>
+        <li><span class="tag new">新機能</span>ドラッグ＆ドロップでも<q>ひとつのシナリオとして登録</q>を選べるようになりました
+          <ul>
+            <li>中が2〜12件に分かれるフォルダを落としたときは、ひとつにするか別々に登録するかを確認します（これまでは確認せずに別々に登録していました）</li>
+            <li>名前の似ているZIP・PDF・HTMLを2つ以上いっしょに落としたときも、ひとつにまとめるか確認します</li>
+          </ul></li>
+        <li><span class="tag new">新機能</span>一覧の<q>選択</q>に<q>ひとつのシナリオにまとめる</q>を追加。あとからでも、別々に登録されたものをひとつにできます（タグ・お気に入り・プレイ状況・メモは引き継ぎます）</li>
+        <li><span class="tag new">新機能</span>カードをつかんで別のカードに重ねると、<q>素材としてまとめる／ひとつのシナリオにまとめる</q>を選べます</li>
+        <li>詳細の<q>付属の素材・ファイル</q>をドラッグすると、一覧に分けて出したり、ほかのシナリオに移したりできます</li>
+        <li>まとめたシナリオの本文（PDF・HTML）は、メインの詳細の<q>中身</q>からすぐ開けます</li>
+        <li>まとめる・分ける・移す操作は、右下のお知らせの<q>元に戻す</q>で戻せます</li>
+      </ul>
+    </details>
+
+    <details class="group">
+      <summary>メモ・サムネイル・プレビュー<em>6件</em></summary>
+      <ul>
+        <li><span class="tag new">新機能</span>シナリオの詳細に<q>メモ</q>欄を追加。URLは<q>↗ BOOTH を開く</q>のようなボタンになります（BOOTH・TALTO・PIXIVは名前で表示）</li>
+        <li><span class="tag new">新機能</span>サムネイルを<q>PDF・HTMLの中の画像</q>からも選べるようになりました</li>
+        <li>画像をカードに重ねると、そのシナリオのサムネイルになります（PCの画像ファイルのほか、ブラウザで表示している画像をドラッグしてもOK。取り込んだ画像はこのパソコンの中だけで使われます）</li>
+        <li>カードで切り替える画像を最大4枚まで追加できます。カードにカーソルを乗せると順に切り替わります</li>
+        <li>画像のプレビューで、同じシナリオのほかの画像へ <kbd>←</kbd> <kbd>→</kbd> キーで移れます。詳細パネルの上の画像をクリックしても大きく表示します</li>
+        <li>サムネイルの<q>ぼかし中</q>を押すと、そのシナリオだけぼかしを外せます（<kbd>Ctrl</kbd>＋クリックでも。Macは <kbd>⌘</kbd>＋クリック）</li>
+      </ul>
+    </details>
+
+    <details class="group">
+      <summary>一覧・サイドバー・ガイド<em>8件</em></summary>
+      <ul>
+        <li><span class="tag new">新機能</span>使い方ガイドを作り直しました（素材のまとめかたのページも追加）。<kbd>←</kbd> <kbd>→</kbd> キーでめくれて、画像のダブルクリックで拡大できます</li>
+        <li><span class="tag new">新機能</span>サイドバーのシステム・プレイ状況・タグを、ドラッグで好きな順に並べられます（プレイ状況の順番はカードのボタンにも反映）。タグは<q>多い順／名前順／自分で並べた順</q>から選べます</li>
+        <li><span class="tag new">新機能</span>サイドバーのいちばん上に<q>最近見た</q>を追加。詳細を開いたシナリオを、新しい順に30件まで表示します</li>
+        <li>サイドバーの欄の順番も、見出しのドラッグか、設定 →<q>見た目</q>から変えられます</li>
+        <li>ドラッグ中は、カーソルのそばに<q>離すと〇〇します</q>と表示します</li>
+        <li>並び順に<q>昇順／降順</q>の切り替えと<q>作者・サークル名順</q>を追加。名前を<q>登録日順</q><q>サイズ順</q><q>ファイル数順</q>に整理しました</li>
+        <li>右下のお知らせは、ボタンのないものは数秒で消え、<q>元に戻す</q>などがあるものは長めに出るようにしました</li>
+        <li>説明文を短く、たためるように整理しました</li>
+      </ul>
+    </details>
+
+    <details class="group">
+      <summary>そのほかの変更・不具合の修正<em>8件</em></summary>
+      <ul>
+        <li><span class="tag fix">修正</span>アプリを再起動すると、一部の設定が元に戻っていた</li>
+        <li><span class="tag fix">修正</span>詳細パネルを下までスクロールしたまま、ほかのアプリに切り替えて戻ると、いちばん上に戻っていた</li>
+        <li><span class="tag fix">修正</span>作者・サークルの<q>×（拾わない）</q>をしても、概要を編集したことのあるシナリオでは名前が消えなかった</li>
+        <li><span class="tag fix">修正</span><q>中身が同じ</q>の件数と、開いたときの一覧の件数が合わないことがあった</li>
+        <li>素材だけが入ったフォルダでは、<q>フォルダの名前をタグにしますか？</q>を聞かないようにしました</li>
+        <li>「HO」の表示を「HO数」に。<q>このままでOK</q>を目立つようにしました</li>
+        <li>タグの設定・重複チェックのボタンの名前をわかりやすくしました</li>
+        <li>Mac版の説明書に、アップデートのしかたを追加しました</li>
+      </ul>
+    </details>
+    <details class="group">
+      <summary>Mac版（試作）<em>4件</em></summary>
+      <ul>
+        <li>Mac版（試作）も、上の変更はすべてWindows版と同じです。Apple シリコン版と Intel 版があります</li>
+        <li>Mac では、<kbd>Ctrl</kbd> のところは <kbd>⌘</kbd> になります（検索は <kbd>⌘</kbd>＋<kbd>F</kbd>、ぼかしを外すのは <kbd>⌘</kbd>＋クリック）</li>
+        <li>タスクトレイの代わりにメニューバーにアイコンが出ます。設定の<q>Windowsの起動時</q>は<q>Macへのログイン時</q>になります</li>
+        <li>付属の説明書（はじめにお読みください（Mac版・試作））に、アップデートのしかたを追加しました</li>
+      </ul>
+    </details>
+  </section>
+
+  <section class="release" id="v1.0.0">
+    <div class="rel-head">
+      <h2>v1.0.0</h2>
+      <time datetime="2026-10-12">2026年10月12日</time>
+    </div>
+    <p class="rel-summary rel-sum">BOOTHでの最初の公開版です。ZIP・フォルダ・PDF・HTMLを解凍せずに一覧・検索・整理できます。</p>
+    <details class="group">
+      <summary>公開時の変更点<em>2件</em></summary>
+      <ul>
+        <li>配布用ZIPを<q>インストーラー版</q>と<q>ポータブル版</q>の2種類に</li>
+        <li><span class="tag fix">修正</span>毎日のバックアップの日付が、日本では朝9時に切り替わっていた（パソコンの時刻で数えるように）</li>
+      </ul>
+    </details>
+  </section>
+
+  <section class="howto" aria-labelledby="howto-h">
+    <h2 id="howto-h">アップデートのしかた</h2>
+    <ol>
+      <li><a href="https://ookiitori.booth.pm/">BOOTH</a>から最新版をダウンロードします</li>
+      <li>インストーラー版はそのままインストール、ポータブル版は古いフォルダと入れ替えます</li>
+      <li>Mac版（試作）は、ZIPを解凍して「アプリケーション」フォルダの「TRPG Archive.app」と置き換えます（置き換えたあと、はじめての起動と同じく「右クリック →開く」が必要になることがあります）</li>
+    </ol>
+    <p>タグ・お気に入り・メモなどの登録データは、アプリとは別の場所に保存されているので、アップデートしても消えません。</p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="https://ookiitori.booth.pm/">BOOTHのページ</a> ・ TRPG Archive ・ <a href="/">ほかのツール</a>
+  </div>
+</footer>
+</body>
+</html>
