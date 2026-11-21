@@ -80,7 +80,7 @@ footer a{margin-right:18px;font-weight:700}
   <li>ユーザーが同期先に選んだGoogleカレンダーの予定（タイトル・説明・日時・本アプリが付ける印）</li>
   <li>カレンダーの一覧（名前とアクセス権の種類）</li>
 </ul>
-<p>Googleに接続しない場合、本アプリはGoogleの情報に一切アクセスしません。</p>
+<p>Googleに接続しない場合、本アプリはGoogleの情報に一切アクセスしません。また本アプリは、Googleのデータをもとに、集計したデータや匿名化したデータを作ることはありません。</p>
 <p>要求する権限（スコープ）は次の2つだけです。</p>
 <ul>
   <li><code>https://www.googleapis.com/auth/calendar.events</code>（予定の表示・追加・変更・削除のため）</li>
@@ -93,7 +93,7 @@ footer a{margin-right:18px;font-weight:700}
 <h3>3. 保存と第三者への提供</h3>
 <ul>
   <li>予定のデータと、Googleへのログイン情報（トークン）は、ユーザー自身のPCの中にだけ保存されます。ログイン情報はOSの機能で暗号化されます。</li>
-  <li>運営者のサーバーはありません。Googleから受け取った情報を、運営者や第三者へ送信・共有・販売することはありません。</li>
+  <li>運営者のサーバーはありません。Googleから受け取った情報（そのままのデータも、集計・匿名化したデータも）を、運営者・第三者・データ仲介業者・広告事業者などへ送信・共有・販売することはありません。</li>
   <li>広告、行動の解析、機械学習・AIの学習には使いません。人が内容を読むこともありません。</li>
 </ul>
 
@@ -139,7 +139,7 @@ footer a{margin-right:18px;font-weight:700}
 <p>TakuCale ("the app") is a desktop sticky-note widget for Windows, operated by notenog.</p>
 
 <h3>1. Information accessed</h3>
-<p>Only if the user chooses "Connect to Google" and grants permission, the app accesses: (a) events of the one Google Calendar the user selects to sync (title, description, date/time, and markers the app adds); and (b) the list of the user's calendars (name and access role). If the user does not connect to Google, the app does not access any Google data.</p>
+<p>Only if the user chooses "Connect to Google" and grants permission, the app accesses: (a) events of the one Google Calendar the user selects to sync (title, description, date/time, and markers the app adds); and (b) the list of the user's calendars (name and access role). If the user does not connect to Google, the app does not access any Google data. The app does not create any aggregated or anonymized data from Google user data.</p>
 <p>The app requests only two scopes: <code>https://www.googleapis.com/auth/calendar.events</code> (to display, create, update, and delete events) and <code>https://www.googleapis.com/auth/calendar.calendarlist.readonly</code> (to let the user choose which calendar to sync).</p>
 
 <h3>2. Use</h3>
@@ -148,7 +148,7 @@ footer a{margin-right:18px;font-weight:700}
 <h3>3. Storage and sharing</h3>
 <ul>
   <li>Event data and Google sign-in credentials (tokens) are stored only on the user's own PC. Credentials are encrypted using the operating system's facilities.</li>
-  <li>There is no developer server. We do not transmit, share, or sell information received from Google to the developer or any third party.</li>
+  <li>There is no developer server. We do not transmit, share, or sell information received from Google (raw, aggregated, or anonymized) to the developer or any third party, including data brokers and advertisers.</li>
   <li>The information is not used for advertising, behavioral analytics, or to develop or train machine-learning or AI models, and no human reads it.</li>
 </ul>
 
